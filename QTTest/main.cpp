@@ -5,14 +5,15 @@
 #include <QSpinBox>
 #include <QHBoxLayout>
 #include <QTime>
+#include <QPainter>    // 系统绘制函数 
+#include <QWidget>
 #include "qttest.h"    // 主窗口的创建 
 #include "Newspaper.h"
 #include "Reader.h"
 #include "CustomButton.h"
-
 #include "label.h"      // 事件响应与过滤的总结
 
-#define  TotalEvent 
+#define  SystemPainter 
   
 int main(int argc, char *argv[])
 {
@@ -116,15 +117,22 @@ int main(int argc, char *argv[])
 #endif   
 
 
-#ifdef TotalEvent 
+#ifdef TotalEvent    // 事件总结  QApplivation event filterEvent PressButton 
 	Label label;
 	app.installEventFilter(new EventFilter(&label, &label));
 	label.show();
 
+#elif 2==TotalEvent   // 自定定义事件  
+	 
 #endif
 
+#ifdef SystemPainter
 
-	
+	PaintedWidget  painter;
+	painter.show();
+
+#endif
+
 	return app.exec();
 }
 

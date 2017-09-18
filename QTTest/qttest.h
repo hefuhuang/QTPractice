@@ -6,6 +6,7 @@
 #include <QTextEdit>
 #include <QFileDialog>
 #include <QCloseEvent>
+#include <QPainter>
 #include "ui_qttest.h"
 
 //#define eventAccptAndIgnore       // 2017/9/16 
@@ -42,6 +43,16 @@ private:
 	QTextEdit* textEdit;
 	Ui::QTTestClass ui;
 
+};
+
+
+class PaintedWidget : public QWidget
+{
+	Q_OBJECT
+public:
+	PaintedWidget(QWidget *parent = 0);
+protected:
+	void paintEvent(QPaintEvent *);
 };
 
 
