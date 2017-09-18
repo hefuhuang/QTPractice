@@ -1,0 +1,12 @@
+debug/
+
+x64/ 
+
+
+
+*.opensdf
+
+*.log 
+
+*.tlog 
+
