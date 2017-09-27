@@ -80,6 +80,7 @@ QTTest::~QTTest()
 
 }
 
+#ifdef Eventfilter     // ¹ıÂË¼üÅÌµÄÊäÈë 
 bool QTTest::eventFilter(QObject *obj, QEvent *event)
 {
 	if (obj == textEdit) {
@@ -98,6 +99,7 @@ bool QTTest::eventFilter(QObject *obj, QEvent *event)
 	}
 
 }
+#endif
 
 
 void QTTest::mousePressEvent(QMouseEvent* event)

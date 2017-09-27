@@ -21,9 +21,10 @@
 #include "Newspaper.h"
 #include "Reader.h"
 #include "CustomButton.h"
-#include "label.h"      // 事件响应与过滤的总结
+#include "label.h"      // 事件响应与过滤的总结 
+#include "MyListView.h"
  
-#define  FileWriteAndRead 
+#define  ViewList 
 //#define TotalEvent 2 
   
 int main(int argc, char *argv[])
@@ -289,11 +290,23 @@ int main(int argc, char *argv[])
 	file.close();
 #endif 
 
+#ifdef ViewList   // 9.27 
+
+	QStringList list;
+	list << QObject::tr("hello")
+		<< QObject::tr("hello2")
+		<< QObject::tr("hello3")
+		<< QObject::tr("5")
+		<< QObject::tr("6");
+	MyListView w2(list);
+	MyListView w;
+	w.show();
+	w2.show();
+
+#endif
 
 #ifdef QFileSystemModel   // 9.27 
  
-
-
 
 #endif
 
