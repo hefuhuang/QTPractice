@@ -13,16 +13,17 @@
 #include <QFont>
 #include <QPainter>
 #include <QRadialGradient> 
-#include <QBrush >
+#include <QBrush>
+#include <QDataStream> 
+#include <QListWidget>
 
 #include "qttest.h"    // 主窗口的创建 
 #include "Newspaper.h"
 #include "Reader.h"
 #include "CustomButton.h"
 #include "label.h"      // 事件响应与过滤的总结
-
-#define  GraphicSeceneAndView 
-#define  File 
+ 
+#define  FileWriteAndRead 
 //#define TotalEvent 2 
   
 int main(int argc, char *argv[])
@@ -247,12 +248,60 @@ int main(int argc, char *argv[])
 	}
 
 #endif
-#ifdef  File
-	 
+#ifdef  FilePath 
+	QString filestr ;
+	filestr = app.applicationFilePath();
+	QFile file("in.txt");
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+		qDebug() << "Open file failed.";
+		return -1;
+	}
+	else {
+		while (!file.atEnd()) {
+			qDebug() << file.readLine();
+		}
+	}
 
+	QFileInfo info(file);
+	qDebug() << info.isDir();
+	qDebug() << info.isExecutable();
+	qDebug() << info.baseName();
+	qDebug() << info.completeBaseName();
+	qDebug() << info.suffix();
+	qDebug() << info.completeSuffix();
+#endif
+#ifdef  FileWriteAndRead  // binary file read 
+	QFile file("file.dat");
+	file.open(QIODevice::ReadWrite);
+
+	QDataStream stream(&file);
+	QString str = "the answer is 42";
+	QString strout;
+
+	stream << str;
+	file.flush();
+	stream >> strout;  
+
+	stream << str;
+	stream.device()->seek(0);
+	stream >> strout;
+	
+	file.close();
 #endif 
 
 
+#ifdef QFileSystemModel   // 9.27 
+ 
+
+
+
+#endif
+
+#ifdef QModelView
+
+
+#endif
+	
 	return app.exec();
 }
 

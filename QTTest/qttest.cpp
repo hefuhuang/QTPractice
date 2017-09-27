@@ -42,6 +42,7 @@ QTTest::QTTest(QWidget *parent)
 #endif 
 
 #ifdef Eventfilter     // ¹ýÂË¼üÅÌµÄÊäÈë 
+
 	textEdit = new QTextEdit;
 	setCentralWidget(textEdit);
 	textEdit->installEventFilter(this);
@@ -63,9 +64,13 @@ QTTest::QTTest(QWidget *parent)
 	widgetLayout->addWidget(cb);
 	this->setCentralWidget(widget);
 
-
 #endif
 
+#ifdef workthread  
+
+
+
+#endif 
 
 	//ui.setupUi(this);
 }
