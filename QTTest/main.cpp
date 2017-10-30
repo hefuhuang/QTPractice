@@ -23,6 +23,7 @@
 #include "CustomButton.h"
 #include "label.h"      // 事件响应与过滤的总结 
 #include "MyListView.h"
+#include "DirctPathViewer.h"
  
 #define  ViewList 
 //#define TotalEvent 2 
@@ -306,9 +307,10 @@ int main(int argc, char *argv[])
 #endif
 
 #ifdef QFileSystemModel   // 9.27 
- 
-
-#endif
+	DirctPathViewer wFile; 
+	wFile.show();
+	wFile.setWindowTitle("QFileSystemModel ");
+#endif 
 
 #ifdef QModelView
 
