@@ -50,7 +50,7 @@ MyListView::MyListView(const QStringList &leaders, QWidget *parent)
 MyListView::MyListView()
 {
 	QStringList data;
-	data << "Lett" << "LettB" << "yaya";
+	data << "1" << "2" << "3";
 
 	model = new QStringListModel(this);
 	model->setStringList(data);
@@ -76,7 +76,12 @@ MyListView::MyListView()
 	QVBoxLayout *mainLayout = new QVBoxLayout(this);
 	mainLayout->addWidget(listView);
 	mainLayout->addLayout(btnLayout);
-	setLayout(mainLayout);
+	setLayout(mainLayout);  
+
+
+	//  模型与视图的实现
+	listView->setItemDelegate(new SpinBoxDelegate(listView));
+
 
 }
 
@@ -118,4 +123,45 @@ void MyListView::showData()
 		str += s +"\0" +"\n"   ;
 	}
 	QMessageBox::information(this, "Data", str);
+}
+
+
+
+
+// 模型与视图的实现代码 ：
+  
+
+QWidget *SpinBoxDelegate::createEditor(QWidget *parent,
+	const QStyleOptionViewItem & /* option */,
+	const QModelIndex & /* index */) const
+{
+	QSpinBox *editor = new QSpinBox(parent);
+	editor->setMinimum(0);
+	editor->setMaximum(100);
+	return editor;
+} 
+
+void SpinBoxDelegate::setEditorData(QWidget *editor,
+	const QModelIndex &index) const
+{
+	int value = index.model()->data(index, Qt::EditRole).toInt();
+	QSpinBox *spinBox = static_cast<QSpinBox*>(editor);
+	spinBox->setValue(value);
+}
+
+void SpinBoxDelegate::setModelData(QWidget *editor,
+	QAbstractItemModel *model,
+	const QModelIndex &index) const
+{
+	QSpinBox *spinBox = static_cast<QSpinBox*>(editor);
+	spinBox->interpretText();
+	int value = spinBox->value();
+	model->setData(index, value, Qt::EditRole);
+}
+
+void SpinBoxDelegate::updateEditorGeometry(QWidget *editor,
+	const QStyleOptionViewItem &option,
+	const QModelIndex &index) const
+{
+	editor->setGeometry(option.rect);
 }

@@ -101,6 +101,15 @@
     <ClCompile Include="DirctPathViewer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sortview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_sortview.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_sortview.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="qttest.h">
@@ -131,6 +140,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="DirctPathViewer.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="sortview.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

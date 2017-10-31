@@ -16,6 +16,7 @@
 #include <QBrush>
 #include <QDataStream> 
 #include <QListWidget>
+#include <QTableWidget> 
 
 #include "qttest.h"    // 主窗口的创建 
 #include "Newspaper.h"
@@ -24,8 +25,10 @@
 #include "label.h"      // 事件响应与过滤的总结 
 #include "MyListView.h"
 #include "DirctPathViewer.h"
+#include "sortview.h"
+
  
-#define  ViewList 
+#define  SortAndFilter 
 //#define TotalEvent 2 
   
 int main(int argc, char *argv[])
@@ -313,10 +316,36 @@ int main(int argc, char *argv[])
 #endif 
 
 #ifdef QModelView
+	MyListView view;
+	view.show();
+
+#endif  
+
+#ifdef  ViewChioce    // 视图选择  
+	QTableWidget m_tableWigrt(8,4);    // 表格的创建 
+	QItemSelectionModel *selectionModel = m_tableWigrt.selectionModel();
+	QModelIndex topLeft = m_tableWigrt.model()->index(0, 0, QModelIndex());
+	QModelIndex bottomRight = m_tableWigrt.model()->index(5, 2, QModelIndex());  // 设置出事选定区
+
+	QItemSelection selection(topLeft, bottomRight);
+	selectionModel->select(selection, QItemSelectionModel::Select);
+
+	//  获取选择区发的数据 
+	QModelIndexList indexes = selectionModel->selectedIndexes();
+	QModelIndex index;
+
+	m_tableWigrt.show();
+
+#endif 
+
+#ifdef SortAndFilter 
+
+	SortView m_SortFilter; 
+	m_SortFilter.show();
+
+#endif 
 
 
-#endif
-	
 	return app.exec();
 }
 
