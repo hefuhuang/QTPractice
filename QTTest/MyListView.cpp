@@ -78,7 +78,6 @@ MyListView::MyListView()
 	mainLayout->addLayout(btnLayout);
 	setLayout(mainLayout);  
 
-
 	//  模型与视图的实现
 	listView->setItemDelegate(new SpinBoxDelegate(listView));
 
@@ -126,10 +125,7 @@ void MyListView::showData()
 }
 
 
-
-
 // 模型与视图的实现代码 ：
-  
 
 QWidget *SpinBoxDelegate::createEditor(QWidget *parent,
 	const QStyleOptionViewItem & /* option */,
