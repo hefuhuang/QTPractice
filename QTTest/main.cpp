@@ -26,9 +26,10 @@
 #include "MyListView.h"
 #include "DirctPathViewer.h"
 #include "sortview.h"
+#include "currencymodel.h"
 
  
-#define  SortAndFilter 
+#define  onlyRead 
 //#define TotalEvent 2 
   
 int main(int argc, char *argv[])
@@ -343,7 +344,27 @@ int main(int argc, char *argv[])
 	SortView m_SortFilter; 
 	m_SortFilter.show();
 
-#endif 
+#endif  
+
+#ifdef onlyRead 
+
+	QMap<QString, double> data;
+	data["USD"] = 1.0000;
+	data["CNY"] = 0.1628;
+	data["GBP"] = 1.5361;
+	data["EUR"] = 1.2992;
+	data["HKD"] = 0.1289;
+
+	QTableView view;
+	CurrencyModel *model = new CurrencyModel(&view);
+	model->setCurrencyMap(data);
+	view.setModel(model);
+	view.resize(400, 300);
+	view.show();
+
+#endif
+
+
 	return app.exec();
 
 

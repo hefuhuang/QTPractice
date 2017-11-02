@@ -110,6 +110,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_sortview.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="currencymodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_currencymodel.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_currencymodel.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="qttest.h">
@@ -143,6 +152,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="sortview.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="currencymodel.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
