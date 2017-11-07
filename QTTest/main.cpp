@@ -362,12 +362,10 @@ int main(int argc, char *argv[])
 	view.resize(400, 300);
 	view.show();
 
-#endif
+#endif 
 
 
 	return app.exec();
-
-
 
 }
 
