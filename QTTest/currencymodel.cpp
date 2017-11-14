@@ -41,20 +41,21 @@ void CurrencyModel::setCurrencyMap(const QMap<QString, double> &map)
 
 bool CurrencyModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-	/*if (index.isValid() 
+	if (index.isValid()
 		&& index.row() != index.column()
-		&& role ==Qt::EditRole)
-	{
-		QString columnCurrency = headerData(index.column, Qt::Horizontal, Qt::DisplayRole).toString();
-
-	    QString rowCurrency = headerData(index.row(),Qt::Vertical, Qt::DisplayRole).toString();
-
-	currencyMap.insert(columnCurrency,value.toDouble() * currencyMap.value(rowCurrency));
-	emit dataChanged(index, index);
-
-	return true;
-}*/
-return false;
+		&& role == Qt::EditRole) {
+		QString columnCurrency = headerData(index.column(),
+			Qt::Horizontal, Qt::DisplayRole)
+			.toString();
+		QString rowCurrency = headerData(index.row(),
+			Qt::Vertical, Qt::DisplayRole)
+			.toString();
+		currencyMap.insert(columnCurrency,
+			value.toDouble() * currencyMap.value(rowCurrency));
+		emit dataChanged(index, index);
+		return true;
+	}
+	return false;
 }
 
 
