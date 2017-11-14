@@ -41,7 +41,7 @@ void CurrencyModel::setCurrencyMap(const QMap<QString, double> &map)
 
 bool CurrencyModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-	if (index.isValid() 
+	/*if (index.isValid() 
 		&& index.row() != index.column()
 		&& role ==Qt::EditRole)
 	{
@@ -51,8 +51,9 @@ bool CurrencyModel::setData(const QModelIndex &index, const QVariant &value, int
 
 	currencyMap.insert(columnCurrency,value.toDouble() * currencyMap.value(rowCurrency));
 	emit dataChanged(index, index);
+
 	return true;
-}
+}*/
 return false;
 }
 
@@ -77,9 +78,6 @@ QVariant CurrencyModel::data(const QModelIndex &index, int role) const
 	if (role == Qt::TextAlignmentRole) {
 		return int(Qt::AlignRight | Qt::AlignVCenter);
 	}
-
-#ifndef ReadAndNoEdit
-
 	else if (role == Qt::DisplayRole) {
 		QString rowCurrency = currencyAt(index.row());
 		QString columnCurrency = currencyAt(index.column());
@@ -90,22 +88,6 @@ QVariant CurrencyModel::data(const QModelIndex &index, int role) const
 			/ currencyMap.value(rowCurrency);
 		return QString("%1").arg(amount, 0, 'f', 4);
 	}
-
- #else
-
-	else if (role == Qt::DisplayRole || role == Qt::EditRole) {
-		QString rowCurrency = currencyAt(index.row());
-		QString columnCurrency = currencyAt(index.column());
-		if (currencyMap.value(rowCurrency) == 0.0) {
-			return "####";
-		}
-		double amount = currencyMap.value(columnCurrency)
-			/ currencyMap.value(rowCurrency);
-		return QString("%1").arg(amount, 0, 'f', 4);
-	}
-
-#endif 
-
 	return QVariant();
 
 }

@@ -2,6 +2,7 @@
 #define CURRENCYMODEL_H
 
 #include <QAbstractTableModel>
+#include <Qstring>
 
 class CurrencyModel : public QAbstractTableModel
 {
