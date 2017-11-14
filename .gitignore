@@ -1,12 +1,16 @@
-debug/
-
-x64/ 
-
+x64/*
+/x64
+x64/
+debug/*
+release/*
 
 
 *.opensdf
-
-*.log 
-
-*.tlog 
+*.dll
+*.lib
+*.log
+*.sdf
+*.xml
+*.opensdf
+*.tlog
 

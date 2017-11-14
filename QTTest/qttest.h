@@ -6,8 +6,9 @@
 #include <QTextEdit>
 #include <QFileDialog>
 #include <QCloseEvent>
+#include <QPainter>
 #include "ui_qttest.h"
-
+#include "MyListView.h"
 //#define eventAccptAndIgnore       // 2017/9/16 
 #define Eventfilter
 
@@ -39,9 +40,20 @@ private:
 	int userAge;
 	QAction  *openAction; 
 	QAction  *saveAction;
-	QTextEdit* textEdit;
-	Ui::QTTestClass ui;
+	QTextEdit* textEdit; 
+	MyListView* viList; 
+	Ui::QTTestClass ui; 
 
+};
+
+
+class PaintedWidget : public QWidget
+{
+	Q_OBJECT
+public:
+	PaintedWidget(QWidget *parent = 0);
+protected:
+	void paintEvent(QPaintEvent *);
 };
 
 

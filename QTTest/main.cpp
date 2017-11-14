@@ -5,14 +5,32 @@
 #include <QSpinBox>
 #include <QHBoxLayout>
 #include <QTime>
+#include <QPainter>    // 系统绘制函数 
+#include <QWidget>
+#include <QEvent>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QFont>
+#include <QPainter>
+#include <QRadialGradient> 
+#include <QBrush>
+#include <QDataStream> 
+#include <QListWidget>
+#include <QTableWidget> 
+
 #include "qttest.h"    // 主窗口的创建 
 #include "Newspaper.h"
 #include "Reader.h"
 #include "CustomButton.h"
+#include "label.h"      // 事件响应与过滤的总结 
+#include "MyListView.h"
+#include "DirctPathViewer.h"
+#include "sortview.h"
+#include "currencymodel.h"
 
-#include "label.h"      // 事件响应与过滤的总结
-
-#define  TotalEvent 
+ 
+#define  onlyRead 
+//#define TotalEvent 2 
   
 int main(int argc, char *argv[])
 {
@@ -115,16 +133,239 @@ int main(int argc, char *argv[])
 
 #endif   
 
-
-#ifdef TotalEvent 
+#ifdef TotalEvent    // 事件总结  QApplivation event filterEvent PressButton 
 	Label label;
 	app.installEventFilter(new EventFilter(&label, &label));
 	label.show();
 
+#elif 2==TotalEvent   // 自定定义事件  
+	 // QEvent::Type  ;
+	 // QEvent::User 
+	// static int QEvent::registerEventType ( int hint = -1 );   //事件注册  
+	//static bool QCoreApplication::sendEvent(QObject *receiver,QEvent *event);
+	//QMouseEvent event(QEvent::MouseButtonPress, pos, 0, 0, 0);
+	//QApplication::sendEvent(mainWindow, &event); 
+	//static void QCoreApplication::postEvent(QObject *receiver,QEvent *event); 
+
 #endif
 
+#ifdef SystemPainter
 
+	PaintedWidget  painter;
+	painter.show();
+
+#endif
+#ifdef GraphicSeceneAndView 
+    
+	QGraphicsScene scene;
+	scene.setSceneRect(0, 0, 500, 500);   //sceneRect属性供QGraphicsView确定视图默认的滚动条区域，并且协助QGraphicsScene管理元素索引
+	scene.addLine(0, 0, 150, 150);
+	QString text = "maybe I have get the key of QT5";
+	scene.addText(text);
+
+	QGraphicsView view(&scene);
+	view.setWindowTitle("Graphics View");      // 窗口命名
+	//view.resize(500, 500);   // 居中显示  
+	view.show();
+
+  
+#endif 
+#ifdef DrawBushAndQpen 
+
+	QRadialGradient gradient(50, 50, 50, 50, 50);
+	gradient.setColorAt(0, QColor::fromRgbF(0, 1, 0, 1));
+	gradient.setColorAt(1, QColor::fromRgbF(0, 0, 0, 0));
+	QBrush brush(gradient);
+
+	QPainter painter;
+	QPen pen(Qt::green, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin);
+	painter.setPen(pen);
+
+	painter.setBrush(brush);
+	painter.drawEllipse(50,150,200,150);
+
+	painter.setRenderHint(QPainter::Antialiasing, true);    // 反走样 
+	painter.setPen(QPen(Qt::black, 5, Qt::DashDotLine, Qt::RoundCap));
+	painter.setBrush(Qt::yellow);
+	painter.drawEllipse(300, 150, 200, 150);
+
+#endif
+
+#ifdef LinearGradient  
+
+	void paintEvent(QPaintEvent *)
+	{
+		QPainter painter(this);
+
+		painter.setRenderHint(QPainter::Antialiasing, true);
+		QLinearGradient linearGradient(60, 50, 200, 200);
+		linearGradient.setColorAt(0.2, Qt::white);
+		linearGradient.setColorAt(0.6, Qt::green);
+		linearGradient.setColorAt(1.0, Qt::black);
+		painter.setBrush(QBrush(linearGradient));
+		painter.drawEllipse(50, 50, 200, 150);
+	} 
+
+
+	void ColorWheel::paintEvent(QPaintEvent *)   // 颜色轮 
+	{
+		QPainter painter(this);
+		painter.setRenderHint(QPainter::Antialiasing);
+
+		const int r = 150;
+		QConicalGradient conicalGradient(0, 0, 0);
+
+		conicalGradient.setColorAt(0.0, Qt::red);      // 0 度角设置为红色
+		conicalGradient.setColorAt(60.0 / 360.0, Qt::yellow);
+		conicalGradient.setColorAt(120.0 / 360.0, Qt::green);
+		conicalGradient.setColorAt(180.0 / 360.0, Qt::cyan);
+		conicalGradient.setColorAt(240.0 / 360.0, Qt::blue);
+		conicalGradient.setColorAt(300.0 / 360.0, Qt::magenta);
+		conicalGradient.setColorAt(1.0, Qt::red);
+
+		painter.translate(r, r);
+
+		QBrush brush(conicalGradient);
+		painter.setPen(Qt::NoPen);
+		painter.setBrush(brush);
+		painter.drawEllipse(QPoint(0, 0), r, r);
+	}
+
+	void ColorWheel::paintEvent(QPaintEvent *)   // 颜色轮 
+	{
+		QPainter painter(this);
+		painter.setRenderHint(QPainter::Antialiasing);
+
+		const int r = 150;
+		QConicalGradient conicalGradient(r, r, 0);
+
+		conicalGradient.setColorAt(0.0, Qt::red);
+		conicalGradient.setColorAt(60.0 / 360.0, Qt::yellow);
+		conicalGradient.setColorAt(120.0 / 360.0, Qt::green);
+		conicalGradient.setColorAt(180.0 / 360.0, Qt::cyan);
+		conicalGradient.setColorAt(240.0 / 360.0, Qt::blue);
+		conicalGradient.setColorAt(300.0 / 360.0, Qt::magenta);
+		conicalGradient.setColorAt(1.0, Qt::red);
+
+		QBrush brush(conicalGradient);
+		painter.setPen(Qt::NoPen);
+		painter.setBrush(brush);
+		painter.drawEllipse(QPoint(r, r), r, r);
+	}
+
+#endif
+#ifdef  FilePath 
+	QString filestr ;
+	filestr = app.applicationFilePath();
+	QFile file("in.txt");
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+		qDebug() << "Open file failed.";
+		return -1;
+	}
+	else {
+		while (!file.atEnd()) {
+			qDebug() << file.readLine();
+		}
+	}
+
+	QFileInfo info(file);
+	qDebug() << info.isDir();
+	qDebug() << info.isExecutable();
+	qDebug() << info.baseName();
+	qDebug() << info.completeBaseName();
+	qDebug() << info.suffix();
+	qDebug() << info.completeSuffix();
+#endif
+#ifdef  FileWriteAndRead  // binary file read 
+	QFile file("file.dat");
+	file.open(QIODevice::ReadWrite);
+
+	QDataStream stream(&file);
+	QString str = "the answer is 42";
+	QString strout;
+
+	stream << str;
+	file.flush();
+	stream >> strout;  
+
+	stream << str;
+	stream.device()->seek(0);
+	stream >> strout;
 	
+	file.close();
+#endif 
+
+#ifdef ViewList   // 9.27 
+
+	QStringList list;
+	list << QObject::tr("hello")
+		<< QObject::tr("hello2")
+		<< QObject::tr("hello3")
+		<< QObject::tr("5")
+		<< QObject::tr("6");
+	MyListView w2(list);
+	MyListView w;
+	w.show();
+	w2.show();
+
+#endif
+
+#ifdef QFileSystemModel   // 9.27 
+	DirctPathViewer wFile; 
+	wFile.show();
+	wFile.setWindowTitle("QFileSystemModel ");
+#endif 
+
+#ifdef QModelView
+	MyListView view;
+	view.show();
+
+#endif  
+
+#ifdef  ViewChioce    // 视图选择  
+	QTableWidget m_tableWigrt(8,4);    // 表格的创建 
+	QItemSelectionModel *selectionModel = m_tableWigrt.selectionModel();
+	QModelIndex topLeft = m_tableWigrt.model()->index(0, 0, QModelIndex());
+	QModelIndex bottomRight = m_tableWigrt.model()->index(5, 2, QModelIndex());  // 设置出事选定区
+
+	QItemSelection selection(topLeft, bottomRight);
+	selectionModel->select(selection, QItemSelectionModel::Select);
+
+	//  获取选择区发的数据 
+	QModelIndexList indexes = selectionModel->selectedIndexes();
+	QModelIndex index;
+
+	m_tableWigrt.show();
+
+#endif 
+
+#ifdef SortAndFilter 
+
+	SortView m_SortFilter; 
+	m_SortFilter.show();
+
+#endif  
+
+#ifdef onlyRead 
+
+	QMap<QString, double> data;
+	data["USD"] = 1.0000;
+	data["CNY"] = 0.1628;
+	data["GBP"] = 1.5361;
+	data["EUR"] = 1.2992;
+	data["HKD"] = 0.1289;
+
+	QTableView view;
+	CurrencyModel *model = new CurrencyModel(&view);
+	model->setCurrencyMap(data);
+	view.setModel(model);
+	view.resize(400, 300);
+	view.show();
+
+#endif 
+
+
 	return app.exec();
+
 }
 
